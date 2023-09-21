@@ -76,12 +76,12 @@ function App() {
       
     </div>
     {!TodoToggle ? 
-      <div>
+      <div className=''>
         <h3 className='text-center mt-5 pb-10'>Todo List</h3>
-        <div className='flex gap-5 px-32'>
+        <div className='grid grid-cols-5 place-items-center'>
           {Todo.map(todo =>{
             return(
-              <div key={todo.id} className='border px-4 py-4 rounded-md shadow-md '>
+              <div key={todo.id} className='container border my-3 p-4 rounded-md shadow-md w-80'>
                 <div  className='text-center'>
                   <div>
                     {todo.title}
@@ -90,7 +90,7 @@ function App() {
                     {todo.description}
                   </div>
                 </div>
-                <div className='flex gap-1'>
+                <div className='flex gap-1 justify-center'>
                   <button className='border border-2 px-5 rounded-md border-yellow-400'>Edit</button>
                   <button className='border border-2 px-5 rounded-md border-red-500' onClick={() => handleDeleteClick(todo.id)}>Delete</button>
                   <button className={todo.isCompleted ? 'border border-2 px-5 rounded-md bg-green-500' : 'border border-2 px-5 rounded-md bg-red-500'} onClick={() => handleToggleCompleted(todo.id)}>{todo.isCompleted ? "Completed" : "Incomplete"}</button>
