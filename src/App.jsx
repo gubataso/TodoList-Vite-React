@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { toast } from 'react-toastify'
 
 function App() {
   const [TodoToggle, setTodoToggle] = useState(null)
@@ -9,17 +10,40 @@ function App() {
 
   function handleSumbmit(e){
     e.preventDefault()
-    setTodo(currentTodo => {
-      return [
-        ...currentTodo,
-        {id: crypto.randomUUID(), title: newTitle,description: newDescription, isCompleted:false},
-      ]
-      
-    })
-    setNewTitle("")
-    setNewDescription("")
+    if(newTitle.length === 0 || newDescription.length === 0){
+      toast.error('All fields are required!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+    }else{
+      setTodo(currentTodo => {
+        return [
+          ...currentTodo,
+          {id: crypto.randomUUID(), title: newTitle,description: newDescription, isCompleted:false},
+        ]
+      })
+      toast.success('Todo has been added!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setNewTitle("")
+      setNewDescription("")
+    }
+    
   }
-
+    
   function handleDeleteClick(id){
     setTodo(currentTodos => {
       return currentTodos.filter(todo => todo.id !== id)
