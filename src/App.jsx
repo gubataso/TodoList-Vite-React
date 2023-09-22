@@ -8,7 +8,7 @@ function App() {
   const [newDescription, setNewDescription] = useState("")
   const [Todo, setTodo] = useState([])
 
-  function handleSumbmit(e){
+  const handleSumbmit = e =>{
     e.preventDefault()
     if(newTitle.length === 0 || newDescription.length === 0){
       toast.error('All fields are required!', {
@@ -41,16 +41,16 @@ function App() {
       setNewTitle("")
       setNewDescription("")
     }
-    
   }
     
-  function handleDeleteClick(id){
+  const handleDeleteClick = id => {
     setTodo(currentTodos => {
       return currentTodos.filter(todo => todo.id !== id)
     })
   }
 
-  function handleToggleCompleted(id){
+
+  const handleToggleCompleted = id => {
     const todos = [...Todo]
     todos.map(todo => {
       if(todo.id === id){
@@ -60,19 +60,70 @@ function App() {
     })
     setTodo(todos)
   }
-    // setTodo(currentTodo =>{
-    //   return currentTodo.map(todo => {
-    //     if(todo.id === id) {
-    //         if(isCompleted == true){
-    //          return{...todo, isCompleted:false}
-    //          }
-    //         else{
-    //          return{...todo, isCompleted:true}
-    //         }
-    //     }
-    //     return todo
-    //   })
-    // })
+  // function handleSumbmit(e){
+  //   e.preventDefault()
+  //   if(newTitle.length === 0 || newDescription.length === 0){
+  //     toast.error('All fields are required!', {
+  //           position: "top-right",
+  //           autoClose: 5000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "dark",
+  //         });
+  //   }else{
+  //     setTodo(currentTodo => {
+  //       return [
+  //         ...currentTodo,
+  //         {id: crypto.randomUUID(), title: newTitle,description: newDescription, isCompleted:false},
+  //       ]
+  //     })
+  //     toast.success('Todo has been added!', {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "dark",
+  //     });
+  //     setNewTitle("")
+  //     setNewDescription("")
+  //   }
+  // }
+
+  // function handleDeleteClick(id){
+  //   setTodo(currentTodos => {
+  //     return currentTodos.filter(todo => todo.id !== id)
+  //   })
+  // }
+
+  // function handleToggleCompleted(id){
+  //   const todos = [...Todo]
+  //   todos.map(todo => {
+  //     if(todo.id === id){
+  //       todo.isCompleted = !todo.isCompleted
+  //     }
+  //     return todo
+  //   })
+  //   setTodo(todos)
+  // }
+  // setTodo(currentTodo =>{
+  //   return currentTodo.map(todo => {
+  //     if(todo.id === id) {
+  //         if(isCompleted == true){
+  //          return{...todo, isCompleted:false}
+  //          }
+  //         else{
+  //          return{...todo, isCompleted:true}
+  //         }
+  //     }
+  //     return todo
+  //   })
+  // })
 
 
   return (
