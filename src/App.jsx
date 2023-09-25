@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { toast } from 'react-toastify'
 
@@ -8,6 +8,10 @@ function App() {
   const [newDescription, setNewDescription] = useState("")
   const [Todo, setTodo] = useState([])
 
+  useEffect(() => {
+    console.log("test")
+  }, [Todo])
+  
   const handleSumbmit = e =>{
     e.preventDefault()
     if(newTitle.length === 0 || newDescription.length === 0){
@@ -48,6 +52,7 @@ function App() {
       return currentTodos.filter(todo => todo.id !== id)
     })
   }
+  
 
 
   const handleToggleCompleted = id => {
@@ -153,10 +158,10 @@ function App() {
     {!TodoToggle ? 
       <div className=''>
         <h3 className='text-center mt-5 pb-10'>Todo List</h3>
-        <div className='lg:grid lg:grid-cols-5 lg:place-items-center  flex gap-2 flex-wrap justify-center'>
+        <div className='xl:grid xl:grid-cols-5 lg:grid lg:grid-cols-3 lg:place-items-center flex gap-2 flex-wrap justify-center'>
           {Todo.map(todo =>{
             return(
-              <div key={todo.id} className='static container border my-3 p-4 rounded-md shadow-md w-80 sm:w-72'>
+              <div key={todo.id} className='container border xl:my-3 xl:p-4 xl:w-80 pb-2 rounded-md shadow-md '>
                 <div  className='text-center'>
                   <div>
                     {todo.title}
