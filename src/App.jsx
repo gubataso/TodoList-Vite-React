@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { toast } from 'react-toastify'
-
+import { TodoCard } from './components/TodoCard'
+import {TodoUpdateDialog} from './components/TodoUpdateDialog'
 function App() {
   const [todoToggle, setTodoToggle] = useState(null)
   const [todos, setTodos] = useState(() => {
@@ -54,24 +55,51 @@ function App() {
       })
     }
   }
+ 
+  const handleUpdateClick = id => {
+    const tempTodos = [...todos]
+    todos.map(todoArray => {
+      if(todoArray.id === id){
+        todoArray.title = todo.title
+        todoArray.description = todo.description
+      }
+      return todo
+    })
+    setTodos(tempTodos)
+    setTodo({
+      id:null,
+      title:"",
+      description:""
+    })
+  }
     
   const handleDeleteClick = id => {
     setTodos(currentTodos => {
       return currentTodos.filter(todo => todo.id !== id)
     })
   }
-  
 
 
   const handleToggleCompleted = id => {
-    const todovar = [...todos]
+    const tempTodos = [...todos]
     todos.map(todo => {
       if(todo.id === id){
         todo.isCompleted = !todo.isCompleted
       }
       return todo
     })
-    setTodos(todovar)
+    setTodos(tempTodos)
+  }
+
+  const handleEditClick = props => {
+    setTodo(props)
+  }
+
+  const handleDialogClose = () => {
+    setTodo({
+      id:null,
+      title:"",
+      description:""})
   }
   
 
@@ -103,6 +131,13 @@ function App() {
 
   return (
     <>
+    <TodoUpdateDialog 
+      todo={todo}
+      setTodo={setTodo}
+      handleDialogClose={handleDialogClose}
+      handleUpdateClick={handleUpdateClick}
+    />
+
     <div className='text-center p-4'> 
       <button className='rounded-2xl p-2 bg-gradient-to-l from-cyan-500 to-blue-500 text-white' onClick={() => setTodoToggle(todoToggle=>!todoToggle)}>
         {todoToggle ? "Hide" : "Show"} Form
@@ -125,30 +160,19 @@ function App() {
       }
       
     </div>
+
+
+    
     {!todoToggle ? 
       <div className=''>
         <h3 className='text-center mt-5 pb-10'>Todo List</h3>
         <div className='xl:grid xl:grid-cols-5 lg:grid lg:grid-cols-3 lg:place-items-center flex gap-2 flex-wrap justify-center'>
-          {todos.map(todo =>{
-            return(
-              <div key={todo.id} className='container border xl:my-3 xl:p-4 xl:w-80 pb-2 rounded-md shadow-md '>
-                <div  className='text-center'>
-                  <div>
-                    {todo.title}
-                  </div>
-                  <div>
-                    {todo.description}
-                  </div>
-                </div>
-                <div className='flex gap-1 justify-center'>
-                  <button className='sm:px-2 border border-2 px-5 rounded-md border-yellow-400'>Edit</button>
-                  <button className='sm:px-2 border border-2 px-5 rounded-md border-red-500' onClick={() => handleDeleteClick(todo.id)}>Delete</button>
-                  <button className={todo.isCompleted ? 'sm:px-2 border border-2 px-5 rounded-md bg-green-500' : 'sm:px-2 border border-2 px-5 rounded-md bg-red-500'} onClick={() => handleToggleCompleted(todo.id)}>{todo.isCompleted ? "Completed" : "Incomplete"}</button>
-                </div>
-              </div>
-            )
-            
-          })}
+            <TodoCard
+              todos={todos}
+              handleEditClick={handleEditClick}
+              handleDeleteClick={handleDeleteClick}
+              handleToggleCompleted={handleToggleCompleted}
+            />
         </div>
       </div>
       :null
