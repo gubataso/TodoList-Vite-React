@@ -167,12 +167,16 @@ function App() {
       <div className=''>
         <h3 className='text-center mt-5 pb-10'>Todo List</h3>
         <div className='xl:grid xl:grid-cols-5 lg:grid lg:grid-cols-3 lg:place-items-center flex gap-2 flex-wrap justify-center'>
+          {todos ? todos.map(todo => 
             <TodoCard
-              todos={todos}
-              handleEditClick={handleEditClick}
-              handleDeleteClick={handleDeleteClick}
-              handleToggleCompleted={handleToggleCompleted}
-            />
+            key={todo.id}
+            todo={todo}
+            handleEditClick={handleEditClick}
+            handleDeleteClick={handleDeleteClick}
+            handleToggleCompleted={handleToggleCompleted}
+          />
+            ):console.log("loading")}
+            
         </div>
       </div>
       :null
